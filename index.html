@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <title>Project</title>
+        <script type="text/javascript" src="raphael-min.js"></script>
+    </head>
+    <body>
+    <script type="text/javascript">
+    var centerx=450,centery=200;
+    var paper = new Raphael(0, 0, 800, 600);
+	var circle = paper.circle(centerx, centery, 100).toFront();
+	var t = paper.text(centerx, centery, 85);
+	//var c = paper.path("M500 300L700 300");
+	circle.attr("fill", "#ff0");
+	circle.attr("stroke", "#fff");
+	var count=0,
+		level=3;
+    var data = [
+                {
+                    "name":"A",
+                    "value":"45"
+                }, 
+                {
+                    "name":"B",
+                    "value":"30",
+                    "branch" : [
+                                {
+                                    "name":"Ba",
+                                    "value" :"10"
+                                },
+                                {
+                                    "name" : "Bb",
+                                    "value" : "15"
+                                }
+                                ]
+                },
+                {
+                    "name":"C",
+                    "value":"40",
+                    "branch" : [
+                                {
+                                    "name":"Ca",
+                                    "value" :"7"
+                                }
+                                ]
+                }
+
+                ];
+    
+    		function reuseMee(data,i1,x1,y1)
+    		{
+    			var len=data.length;
+    			var angle = (360/len)*(22/7)/360;
+        		//alert("# length : "+len+ " ANgle : "+ angle);
+        		
+        		for(i=0;i<len;i++)
+        		{
+            		count=0;
+            		//alert("i value : " + i);
+            		for(var j in data[i])
+            		{
+                		if(data[i].hasOwnProperty(j))
+                    		++count;
+            		}
+            		//alert("# i value : "+i+"count value : "+count);
+            		//alert("x coordinate" + (x1+(75*Math.cos(i*angle)))+ "y coordinate "+ (y1+(75*Math.sin(i*angle))) + "for " + data[i].value);
+            		var paper = Raphael(0, 0, 800, 600);
+            		var circle = paper.circle((x1+(75*Math.cos(i*angle))), (y1+(75*Math.sin(i*angle))),data[i].value).toFront();
+            		var t = paper.text((x1+(75*Math.cos(i*angle))), (y1+(75*i*Math.sin(i*angle))), data[i].value);
+            		circle.attr("fill", "#f0f");
+            		circle.attr("stroke", "#fff");
+            		//alert("# I just created a circle of " + data[i].value + "radius");
+            		
+            	}
+            	return i1;
+ 			}
+    		function reuseMe(data,xco,yco)
+    		{
+    			var len=data.length;
+        		
+        		var angle = 360/len*(22/7)/360;
+        		//alert("# length : "+len+ " ANgle : "+ angle);
+        		for(i=0;i<len;i++)
+        		{
+            		count=0;
+            		//alert("i value : " + i);
+            		for(var j in data[i])
+            		{
+                		if(data[i].hasOwnProperty(j))
+                    		++count;
+            		}
+            		//alert("i value : "+i+"count value : "+count);
+            		var paper = Raphael(0, 0, 800, 600);
+            		var circle = paper.circle((centerx+(250*Math.cos(i*angle))), (centery+(250*Math.sin(i*angle))), data[i].value).toFront();
+            		//alert("x coordinate" + (centerx+(250*Math.cos(i*angle)))+ "y coordinate "+ (centery+(250*Math.sin(i*angle))) + "for " + data[i].value);
+            		var t = paper.text((centerx+(250*Math.cos(i*angle))), (centery+(250*Math.sin(i*angle))), data[i].value);
+            		circle.attr("fill", "#0f0");
+            		circle.attr("stroke", "#fff");
+            		//alert("I just created a circle of " + data[i].value + "radius");
+            		if(count!=2)
+            		{
+                		//alert("You called me when i ="+i);
+                		i=reuseMee(data[i].branch,i,(centerx+(250*Math.cos(i*angle))),(centery+(250*Math.sin(i*angle))));
+                		//alert("Ok i value now is "+ i);
+            		}
+        		}
+ 			}reuseMe(data,centerx,centery);
+
+	</script>
+
+
+	</body>
+</html>
